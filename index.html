@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<!-- viewport-fit=cover serve a far arrivare lo sfondo sotto la barra home e il notch -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Dieta 1800</title>
+<meta name="description" content="Piano alimentare da 1800 kcal senza legumi, lista della spesa e monitoraggio terapia e peso.">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f7a5a" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1512" media="(prefers-color-scheme: dark)">
+
+<!-- Schermo intero quando l'app viene aggiunta alla schermata Home di iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dieta 1800">
+<link rel="apple-touch-icon" href="icons/icona-180.png">
+<link rel="icon" href="icons/icona-192.png" type="image/png">
+
+<link rel="stylesheet" href="css/stile.css">
+</head>
+<body>
+
+<header class="intestazione">
+  <div class="intestazione-testo">
+    <h1 id="titolo-vista">Piano</h1>
+    <p id="sottotitolo-vista">1800 kcal · senza legumi</p>
+  </div>
+</header>
+
+<main id="contenuto">
+  <!-- ------------------------------------------------------------- piano -->
+  <section id="vista-piano" class="vista" aria-labelledby="titolo-vista">
+    <div id="selettore-giorni" class="selettore-giorni" role="tablist" aria-label="Giorno della settimana"></div>
+    <div id="riepilogo-giorno" class="riepilogo"></div>
+    <div id="elenco-pasti"></div>
+    <p class="nota-piede">
+      Le quantità sono a crudo e al netto degli scarti. Il piano è una traccia:
+      adattalo con il tuo medico o dietista, soprattutto se cambi dose.
+    </p>
+  </section>
+
+  <!-- ------------------------------------------------------------- spesa -->
+  <section id="vista-spesa" class="vista" hidden>
+    <div class="scheda scheda-compatta">
+      <p class="etichetta">Giorni da coprire</p>
+      <div id="selettore-spesa" class="chips"></div>
+    </div>
+    <div id="elenco-spesa"></div>
+    <button id="azzera-spesa" class="bottone bottone-secondario">Togli tutte le spunte</button>
+  </section>
+
+  <!-- ---------------------------------------------------------- mounjaro -->
+  <section id="vista-mounjaro" class="vista" hidden>
+    <div id="prossima-iniezione" class="scheda scheda-evidenza"></div>
+
+    <div class="scheda">
+      <h2>Impostazioni terapia</h2>
+      <label class="campo">
+        <span>Giorno dell'iniezione</span>
+        <select id="giorno-iniezione">
+          <option value="">— scegli —</option>
+        </select>
+      </label>
+      <label class="campo">
+        <span>Dose attuale</span>
+        <select id="dose-attuale">
+          <option value="">— scegli —</option>
+          <option value="2,5 mg">2,5 mg</option>
+          <option value="5 mg">5 mg</option>
+          <option value="7,5 mg">7,5 mg</option>
+          <option value="10 mg">10 mg</option>
+          <option value="12,5 mg">12,5 mg</option>
+          <option value="15 mg">15 mg</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="scheda">
+      <h2>Registra iniezione</h2>
+      <div class="riga-campi">
+        <label class="campo">
+          <span>Data</span>
+          <input type="date" id="data-iniezione">
+        </label>
+        <label class="campo">
+          <span>Sito</span>
+          <select id="sito-iniezione">
+            <option>Addome</option>
+            <option>Coscia</option>
+            <option>Braccio</option>
+          </select>
+        </label>
+      </div>
+      <button id="salva-iniezione" class="bottone">Registra</button>
+      <p id="suggerimento-sito" class="nota"></p>
+    </div>
+
+    <div class="scheda">
+      <h2>Storico iniezioni</h2>
+      <div id="storico-iniezioni"></div>
+    </div>
+
+    <div class="scheda scheda-note">
+      <h2>Da ricordare</h2>
+      <ul class="elenco-note">
+        <li><b>Proteine prima di tutto.</b> Con poco appetito si finisce per mangiare solo carboidrati: in ogni pasto parti dalla fonte proteica, il resto viene dopo.</li>
+        <li><b>Bevi.</b> Almeno 1,5-2 litri d'acqua al giorno. La sensazione di sete si attenua e la disidratazione peggiora stanchezza e stitichezza.</li>
+        <li><b>Porzioni piccole, mangiate piano.</b> Fermati appena sei sazio: insistere è la causa più comune di nausea e vomito.</li>
+        <li><b>Nei giorni difficili</b> punta su cibi morbidi e freschi (yogurt greco, fiocchi di latte, purè, zuppe) e riduci i grassi.</li>
+        <li><b>Muoviti e allenati con i pesi.</b> È ciò che protegge la massa muscolare mentre cali di peso.</li>
+        <li>Dosaggio, cambi di dose ed effetti collaterali persistenti si discutono con il medico che ti segue: questa app registra, non prescrive.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- peso -->
+  <section id="vista-peso" class="vista" hidden>
+    <div id="riepilogo-peso" class="scheda scheda-evidenza"></div>
+
+    <div class="scheda">
+      <h2>Nuova pesata</h2>
+      <div class="riga-campi">
+        <label class="campo">
+          <span>Data</span>
+          <input type="date" id="data-peso">
+        </label>
+        <label class="campo">
+          <!-- type=text e non number: la tastiera decimale italiana propone la
+               virgola, che un campo numerico scarterebbe lasciando il valore vuoto -->
+          <span>Peso (kg)</span>
+          <input type="text" id="valore-peso" inputmode="decimal" autocomplete="off" maxlength="6" placeholder="es. 92,4">
+        </label>
+      </div>
+      <button id="salva-peso" class="bottone">Salva</button>
+    </div>
+
+    <div class="scheda">
+      <h2>Andamento</h2>
+      <div id="grafico-peso"></div>
+    </div>
+
+    <div class="scheda">
+      <h2>Storico pesate</h2>
+      <div id="storico-peso"></div>
+    </div>
+
+    <div class="scheda">
+      <h2>Backup</h2>
+      <p class="nota">I dati stanno solo su questo telefono. Scarica ogni tanto una copia: se cambi iPhone o cancelli i dati di Safari, è l'unico modo per ritrovarli.</p>
+      <div class="riga-bottoni">
+        <button id="esporta-dati" class="bottone bottone-secondario">Esporta</button>
+        <button id="importa-dati" class="bottone bottone-secondario">Importa</button>
+      </div>
+      <input type="file" id="file-importa" accept="application/json,.json" hidden>
+    </div>
+  </section>
+</main>
+
+<nav class="barra-tab" role="tablist" aria-label="Sezioni">
+  <button class="tab attiva" data-vista="piano" role="tab" aria-selected="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M7 3v6M10 3v6M17 3c-1.5 2-2 4-2 7h3v11"/></svg>
+    <span>Piano</span>
+  </button>
+  <button class="tab" data-vista="spesa" role="tab" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h7.3a2 2 0 0 0 2-1.5L21 8H7"/><circle cx="10.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg>
+    <span>Spesa</span>
+  </button>
+  <button class="tab" data-vista="mounjaro" role="tab" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5 20.5 8.5M18 6l-9.5 9.5-1 4.5 4.5-1L21.5 9.5a2.1 2.1 0 0 0 0-3l-1-1a2.1 2.1 0 0 0-3 0zM10 11l3 3"/></svg>
+    <span>Mounjaro</span>
+  </button>
+  <button class="tab" data-vista="peso" role="tab" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 9.5 12l4 3.5L20 6"/><path d="M15 6h5v5"/></svg>
+    <span>Peso</span>
+  </button>
+</nav>
+
+<div id="notifica" class="notifica" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

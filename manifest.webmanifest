@@ -1,0 +1,20 @@
+{
+  "name": "Dieta 1800 · senza legumi",
+  "short_name": "Dieta 1800",
+  "description": "Piano alimentare da 1800 kcal senza legumi, lista della spesa e monitoraggio di terapia e peso.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f4f3",
+  "theme_color": "#0f7a5a",
+  "categories": ["health", "lifestyle", "food"],
+  "icons": [
+    { "src": "icons/icona-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icons/icona-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icona-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icona-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
