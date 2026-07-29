@@ -592,6 +592,9 @@ document.addEventListener('visibilitychange', () => {
   if (!$('#vista-mounjaro').hidden) disegnaMounjaro();
 });
 
+// --- service worker (rimosso dalla versione a file singolo) ---
+// tools/costruisci-singolo.mjs taglia da qui in fondo: nella pagina a file
+// unico non c'è un sw.js da registrare.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch((e) => console.warn('Service worker non registrato', e));

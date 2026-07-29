@@ -23,6 +23,14 @@
   color-scheme: light dark;
 }
 
+/*
+ * I colori sono tutti qui sotto forma di variabili: i componenti non sanno se
+ * il tema è chiaro o scuro, leggono solo i token. Il tema segue la preferenza
+ * di sistema, ma un eventuale attributo data-theme sulla radice ha la
+ * precedenza in entrambe le direzioni (serve quando la pagina è ospitata
+ * dentro un contenitore che offre il suo interruttore chiaro/scuro).
+ */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --verde: #2ec08c;
@@ -37,6 +45,36 @@
     --ambra: #e0a44a;
     --rosso: #f2827a;
   }
+}
+
+:root[data-theme="dark"] {
+  --verde: #2ec08c;
+  --verde-chiaro: #3ad39c;
+  --sfondo: #0b1512;
+  --superficie: #15201c;
+  --testo: #e9f1ee;
+  --testo-tenue: #93a49e;
+  --bordo: #24322d;
+  --ombra: none;
+  --barra: rgba(11, 21, 18, .8);
+  --ambra: #e0a44a;
+  --rosso: #f2827a;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --verde: #0f7a5a;
+  --verde-chiaro: #17a173;
+  --sfondo: #f2f4f3;
+  --superficie: #ffffff;
+  --testo: #131a18;
+  --testo-tenue: #6b7a75;
+  --bordo: #e2e7e5;
+  --ombra: 0 1px 2px rgba(19, 26, 24, .06), 0 6px 16px rgba(19, 26, 24, .05);
+  --barra: rgba(255, 255, 255, .82);
+  --ambra: #b26b00;
+  --rosso: #b3261e;
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
